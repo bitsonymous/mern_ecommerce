@@ -13,7 +13,7 @@ app.use(cors());
 require('dotenv').config()
 const port = process.env.PORT;
 
-mongoose.connect(process.env.MONGO_URl)
+mongoose.connect(process.env.MONGO_URL)
 
 app.get("/", (req, res) => {
   app.use(express.static(path.resolve(__dirname, "frontend", "build")));

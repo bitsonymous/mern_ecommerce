@@ -16,12 +16,12 @@ const port = process.env.PORT;
 mongoose.connect(process.env.MONGO_URL)
 
 app.get("/", (req, res) => {
-  app.use(express.static(path.resolve(__dirname, "src/frontend", "build")));
-  res.sendFile(path.resolve(__dirname, "src/frontend", "build", "index.html"));
+  app.use(express.static(path.resolve(__dirname, "frontend", "build")));
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
   app.get("/admin", (req, res) => {
-    app.use(express.static(path.resolve(__dirname, "src/admin", "dist")));
-    res.sendFile(path.resolve(__dirname, "src/admin", "dist", "index.html"));
+    app.use(express.static(path.resolve(__dirname, "admin", "dist")));
+    res.sendFile(path.resolve(__dirname, "admin", "dist", "index.html"));
     });
 
 app.listen(port, (error) => {

@@ -1,4 +1,4 @@
-const port = 4000;
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -7,13 +7,13 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 
+
 app.use(express.json());
 app.use(cors());
+require('dotenv').config()
+const port = process.env.PORT;
 
-// ps :  Sk3YEoLDtYpOGJCL
-// mongodb+srv://bitsonymous:<password>@cluster0.a4g7cfe.mongodb.net/
-// mongodb+srv://bitsonymous:Sk3YEoLDtYpOGJCL@cluster0.a4g7cfe.mongodb.net/
-mongoose.connect("mongodb+srv://bitsonymous:Sk3YEoLDtYpOGJCL@cluster0.a4g7cfe.mongodb.net/e-commerce")
+mongoose.connect(process.env.MONGO_URl)
 
 app.get("/", (req, res) => {
   app.use(express.static(path.resolve(__dirname, "frontend", "build")));
@@ -163,7 +163,7 @@ app.post('/signup', async (req, res) => {
             }
         }
         
-        const token = jwt.sign(data, 'secret_ecom');
+        const token = jwt.sign(data, process.env.SECRET_KEY );
         success = true; 
         res.json({ success, token })
     });
@@ -182,7 +182,7 @@ app.post('/signup', async (req, res) => {
                 }
           success = true;
           console.log(user.id);
-          const token = jwt.sign(data, 'secret_ecom');
+          const token = jwt.sign(data, process.env.SECRET_KEY);
           res.json({ success, token });
             }
             else {
@@ -214,7 +214,7 @@ app.post('/signup', async (req, res) => {
         res.status(401).send({ errors: "Please authenticate using a valid token" });
       }
       try {
-        const data = jwt.verify(token, "secret_ecom");
+        const data = jwt.verify(token, process.env.SECRET_KEY);
         req.user = data.user;
         next();
       } catch (error) {
